@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const CATEGORY_API = "http://localhost:8080/api/category";
+const CATEGORY_API = "https://newsify-myh1.onrender.com/api/category";
 
 export const categoryApi = createApi({
   reducerPath: "categoryApi",

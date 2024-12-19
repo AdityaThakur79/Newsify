@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const TAG_API = "http://localhost:8080/api/tag";
+const TAG_API = "https://newsify-myh1.onrender.com/api/tag";
 
 export const tagApi = createApi({
   reducerPath: "tagApi",

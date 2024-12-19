@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const COMMENT_API = "http://localhost:8080/api/comment";
+const COMMENT_API = "https://newsify-myh1.onrender.com/api/comment";
 
 export const commentApi = createApi({
   reducerPath: "commentApi",

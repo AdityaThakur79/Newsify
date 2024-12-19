@@ -1,7 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { userLoggedIn, userLoggedOut } from "../authSlice";
 
-const USER_API = "http://localhost:8080/api/user";
+const USER_API = "https://newsify-myh1.onrender.com/api/user";
 export const authApi = createApi({
   reducerPath: "authApi",
   tagTypes: ["Refetch_Bookmarks"],
