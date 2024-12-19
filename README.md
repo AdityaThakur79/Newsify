@@ -1,77 +1,44 @@
-# **LMS**
+# Newsify
 
-This project is a comprehensive **Learning Management System (LMS)** designed to streamline online education for both administrators and users. Built using modern web development technologies, the LMS provides an intuitive interface and robust features to support course creation, management, and learning experiences.
-
----
-
-## **Key Features**
-
-### 1. **Authentication & Authorization**
-- User login/signup functionality with secure authentication.  
-- Role-based access control for administrators, instructors, and learners.  
-
-### 2. **Course Management**
-- Admin dashboard for creating, editing, and managing courses.  
-- Features for uploading lectures, managing course details, and setting publication status.  
-- Integration with **Multer** and **Cloudinary** for media uploads.  
-
-### 3. **User Profiles**
-- Personalized user profiles with update and edit options.  
-- Tracking of purchased courses and learning progress.  
-
-### 4. **Frontend Design**
-- Clean and responsive UI built with **Shadcn UI**.  
-- Pages for the navbar, hero section, and dynamic course-related content.  
-- Support for **light/dark mode** for enhanced user experience.  
-
-### 5. **Backend Setup**
-- Backend API using **Node.js** and **Express** with RESTful controllers.  
-- Database integration with **MongoDB** for user and course data management.  
-- Integration with **Redux Toolkit Query (RTK Query)** for efficient state management.  
-
-### 6. **Course Operations**
-- Adding and editing course details, including lecture uploads and updates.  
-- Fetching and displaying courses based on admin/user roles.  
-
-### 7. **Payment & Purchases**
-- Seamless course purchase flow using **Stripe** for payment processing.  
-- Webhook implementation for managing purchase transactions.  
-
-### 8. **Interactive Learning**
-- User-friendly interface for accessing purchased courses and tracking learning progress.  
-- Support for filtering and searching courses.  
-
-### 9. **Advanced Features**
-- Protected routes ensuring secure access to critical pages.  
-- Dynamic routing using **React Router Dom**.  
-- Support for publishing/unpublishing courses with status updates.  
+**Newsify** is a news aggregation platform that allows users to explore the latest news across various categories like Technology, Business, Sports, Entertainment, and more. It also provides an admin panel for managing articles, categories, and users, with features like CSV and XLS data export.
 
 ---
 
-## **Tech Stack**
+## Features
 
-### **Frontend:**
-- React.js  
-- Redux Toolkit  
-- Shadcn UI  
-- React Router Dom  
+- **User Dashboard**: Displays the latest articles across different news categories.
+- **Admin Panel**: Allows admins to manage articles, categories, and users.
+- **Category Management**: Admin can create, update, and delete categories for organizing articles.
+- **Article Management**: Admin can add, edit, and delete articles, as well as assign them to categories.
+- **Export Data**: Admin can export articles, categories, and other data to CSV or XLS formats.
+- **Search Functionality**: Allows users to search for articles by title, keywords, or category.
+- **Responsive Design**: The platform is designed to be fully responsive, ensuring compatibility with desktop, tablet, and mobile devices.
 
-### **Backend:**
-- Node.js  
-- Express.js  
+---
 
-### **Database:**
-- MongoDB  
+## Technologies Used
 
-### **State Management:**
-- Redux Toolkit (RTK Query)  
+### Frontend:
 
-### **File Storage:**
-- Multer  
-- Cloudinary  
+- **React.js**: JavaScript library for building user interfaces.
+- **React Router**: For client-side routing and navigation.
+- **Tailwind CSS**: Utility-first CSS framework for custom styling.
+- **React Query / RTK Query**: For data fetching and state management.
+- **Papa Parse**: For CSV and XLS export functionality.
 
-### **Payment Gateway:**
-- Stripe  
+### Backend (if applicable):
 
-### **Version Control:**
-- Git  
+- **Node.js / Express.js**: Server-side logic and API routes.
+- **MongoDB**: Database to store articles, categories, and user data.
+- **JWT (JSON Web Tokens)**: For user authentication and authorization.
+
+---
+
+## Installation
+
+### 1. Clone the Repository
+
+First, clone the project to your local machine:
+
+```bash
+git clone https://github.com/your-username/newsify.git
