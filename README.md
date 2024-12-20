@@ -1,3 +1,5 @@
+# This project is made within 24 hours
+
 # Newsify
 
 **Newsify** is a news aggregation platform that allows users to explore the latest news across various categories like Technology, Business, Sports, Entertainment, and more. It also provides an admin panel for managing articles, categories, and users, with features like CSV and XLS data export.
@@ -42,3 +44,4 @@ First, clone the project to your local machine:
 
 ```bash
 git clone https://github.com/your-username/newsify.git
+
