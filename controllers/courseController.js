@@ -53,9 +53,9 @@ export const getAllPublishedCourses = async (req, res) => {
       .populate({
         path: "creator",
         select: "name photoUrl",
-      }).populate({
-        path:"tags",
-        
+      })
+      .populate({
+        path: "tags",
       })
       .sort({ createdAt: -1 });
     if (!courses) {
@@ -80,8 +80,6 @@ export const updateCourseController = async (req, res) => {
     const {
       articleTitle,
       subTitle,
-      category,
-      tags,
       isPublished,
       publishedAt,
       readingTime,
@@ -90,7 +88,7 @@ export const updateCourseController = async (req, res) => {
     const articleThumbnail = req.file; // Getting the uploaded thumbnail file from req.file
 
     // Validate required fields
-    if (!articleTitle || !category) {
+    if (!articleTitle) {
       return res.status(400).send({
         success: false,
         message: "Article title and category are required to update the course",
@@ -121,8 +119,6 @@ export const updateCourseController = async (req, res) => {
     const updatedData = {
       articleTitle,
       subTitle,
-      category,
-      tags: tags || course.tags,
       articleThumbnail:
         updatedArticleThumbnail?.secure_url || course.articleThumbnail,
       isPublished: isPublished !== undefined ? isPublished : course.isPublished,
@@ -165,7 +161,7 @@ export const getCreatorCourses = async (req, res) => {
       .status(500)
       .send({ message: "Something Went wrong while Fetching course", error });
   }
-}; 
+};
 
 export const getCourseById = async (req, res) => {
   try {
