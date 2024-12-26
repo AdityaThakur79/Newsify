@@ -51,9 +51,7 @@ const Navbar = () => {
 
     return (
         <div className="h-16 dark:bg-[#020817] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 duration-300 z-10">
-            {/* desktop */}
             <div className='md:flex max-w-7xl mx-auto hidden justify-between gap-10 h-full'>
-                {/* Logo */}
                 <Link to="/">
                     <div className='flex gap-2 items-center mt-3'>
                         <School size={"30"} />
@@ -75,6 +73,9 @@ const Navbar = () => {
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
                                     <Link to="mybookmarks">My Bookmarks</Link>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <Link to="myreadinghistory">History</Link>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <Link to="profile">Edit Profile</Link>
@@ -106,7 +107,7 @@ const Navbar = () => {
 
             {/* Mobile Device */}
             <div className="flex md:hidden items-center justify-between px-4 h-full">
-                <h1 className="font-extrabold text-2xl">Newsify</h1>
+                <Link to="/"> <h1 className="font-extrabold text-2xl">Newsify</h1></Link>
                 <div className='flex md:hidden items-center justify-between px-4 h-full'>
                     <MobileNavbar />
                 </div>
@@ -131,6 +132,7 @@ const MobileNavbar = () => {
             navigate("/login")
         }
     }, [isSuccess])
+
     return (
         <Sheet>
             <SheetTrigger asChild>
@@ -144,44 +146,61 @@ const MobileNavbar = () => {
             </SheetTrigger>
             <SheetContent className="flex flex-col">
                 <SheetHeader className="flex flex-row items-center justify-between mt-2">
-                    <SheetTitle>  Newsify </SheetTitle>
+                    <Link to="/">
+                        <SheetTitle>Newsify</SheetTitle>
+                    </Link>
                     <DarkMode />
                 </SheetHeader>
                 <Separator className="mr-2" />
                 {user ? (
                     <div className='flex flex-col gap-2'>
-
                         <Avatar>
                             <AvatarImage src={user?.photoUrl} alt="@shadcn" />
                             <AvatarFallback>{user.name?.charAt(0).toUpperCase()}</AvatarFallback>
                         </Avatar>
-
-
-                        <Link to="mybookmarks">My Bookmarks</Link>
-                        <DropdownMenuSeparator />
-                        <Link to="profile">Edit Profile</Link>
-                        <DropdownMenuSeparator />
-                        {
-                            user.role == "instructor" && (
-
+                        <SheetClose asChild>
+                            <Link to="mybookmarks">My Bookmarks</Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                            <Link to="myreadinghistory">History</Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                            <Link to="profile">Edit Profile</Link>
+                        </SheetClose>
+                        {user.role === "instructor" && (
+                            <SheetClose asChild>
                                 <Link to="/admin/dashboard">Dashboard</Link>
+                            </SheetClose>
+                        )}
+                        <SheetClose asChild>
+                            <SheetClose asChild>
+                                <div
+                                    onClick={logoutHandler}
+                                    className="flex items-center gap-2 cursor-pointer"
+                                >
+                                    <LogOut />
+                                    <span>Log out</span>
+                                </div>
+                            </SheetClose>
 
-                            )}
-                        <DropdownMenuSeparator />
-                        <div onClick={logoutHandler}  >
-
-                            <span><LogOut />Log out</span>
-                        </div>
-
-
-                    </div>) :
-                    <div className='flex gap-2 items-center'>
-                        <Link to="/login"><Button variant="outline">Login</Button></Link>
-                        <Link to="/login"> <Button>Signup</Button></Link>
+                        </SheetClose>
                     </div>
-                }
-
+                ) : (
+                    <div className='flex gap-2 items-center'>
+                        <SheetClose asChild>
+                            <Link to="/login">
+                                <Button variant="outline">Login</Button>
+                            </Link>
+                        </SheetClose>
+                        <SheetClose asChild>
+                            <Link to="/login">
+                                <Button>Signup</Button>
+                            </Link>
+                        </SheetClose>
+                    </div>
+                )}
             </SheetContent>
         </Sheet>
     );
 };
+

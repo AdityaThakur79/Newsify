@@ -1,6 +1,7 @@
 import React from 'react';
 import { useGetAllCategoriesQuery } from '@/features/api/categoryApi.js';
 import { useGetAllTagsQuery } from '@/features/api/tagApi';
+import { Link } from 'react-router-dom';
 
 const CategoriesTagsCard = () => {
     const { data: categoriesData, isLoading: categoriesLoading } = useGetAllCategoriesQuery();
@@ -22,14 +23,18 @@ const CategoriesTagsCard = () => {
                                 <p>Loading categories...</p>
                             ) : (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+
                                     {categoriesData?.categories?.map((category) => (
-                                        <div
-                                            key={category._id}
-                                            className="bg-gray-100 dark:bg-[#3c3c3c] rounded-lg p-4 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#4d4d4d] transition-all"
-                                        >
-                                            <p className="text-center">{category.name}</p>
-                                        </div>
+                                        <Link to={`category-detail/${category._id}`}>
+                                            <div
+                                                key={category._id}
+                                                className="bg-gray-100 dark:bg-[#3c3c3c] rounded-lg p-4 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#4d4d4d] transition-all"
+                                            >
+                                                <p className="text-center">{category.name}</p>
+                                            </div>
+                                        </Link>
                                     ))}
+
                                 </div>
                             )}
                         </div>
@@ -42,12 +47,14 @@ const CategoriesTagsCard = () => {
                             ) : (
                                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                                     {tagsData?.tags?.map((tag) => (
-                                        <div
-                                            key={tag._id}
-                                            className="bg-gray-100 dark:bg-[#3c3c3c] rounded-lg p-4 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#4d4d4d] transition-all"
-                                        >
-                                            <p className="text-center">{tag.name}</p>
-                                        </div>
+                                        <Link to={`tag-detail/${tag._id}`}>
+                                            <div
+                                                key={tag._id}
+                                                className="bg-gray-100 dark:bg-[#3c3c3c] rounded-lg p-4 text-gray-800 dark:text-white hover:bg-gray-200 dark:hover:bg-[#4d4d4d] transition-all"
+                                            >
+                                                <p className="text-center">{tag.name}</p>
+                                            </div>
+                                        </Link>
                                     ))}
                                 </div>
                             )}
@@ -55,7 +62,7 @@ const CategoriesTagsCard = () => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div >
     );
 };
 

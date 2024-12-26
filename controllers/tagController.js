@@ -1,4 +1,5 @@
-import {Tag} from "../models/tags.js";
+import { Course } from "../models/course.js";
+import { Tag } from "../models/tags.js";
 
 // Create a new tag
 export const createTagController = async (req, res) => {
@@ -117,5 +118,26 @@ export const deleteTagController = async (req, res) => {
       message: "Error deleting tag",
       error,
     });
+  }
+};
+
+export const getArticlesByTag = async (req, res) => {
+  try {
+    const { tagId } = req.params;
+    
+    const articles = await Course.find({ tags: tagId })
+      .populate("creator", "name photoUrl")
+      .populate("category", "name");
+
+    if (articles.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No articles found for this tag" });
+    }
+
+    res.status(200).json({ articles });
+  } catch (error) {
+    console.error("Error fetching articles by tag:", error);
+    res.status(500).json({ message: "Server error" });
   }
 };

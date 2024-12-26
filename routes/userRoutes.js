@@ -8,6 +8,8 @@ import {
   addBookmark,
   removeBookmark,
   getBookmarks,
+  readingHistoryController,
+  getUserReadingHistoryController,
 } from "../controllers/userController.js";
 import express from "express";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
@@ -33,4 +35,10 @@ router.put(
   updateUserController
 );
 
+router.post("/history/read", readingHistoryController);
+router.get(
+  "/reading-history",
+  isAuthenticated,
+  getUserReadingHistoryController
+);
 export default router;

@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 import { deleteMediaFromCloudinary, uploadMedia } from "../utils/cloudinary.js";
 import { Course } from "../models/course.js";
+import { ReadingHistory } from "../models/readingHistory.js";
 // Register
 export const registerController = async (req, res) => {
   try {
@@ -285,8 +286,6 @@ export const removeBookmark = async (req, res) => {
   }
 };
 
-// controllers/bookmarkController.js
-
 // Get all bookmarks of the user
 export const getBookmarks = async (req, res) => {
   try {
@@ -304,5 +303,53 @@ export const getBookmarks = async (req, res) => {
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const readingHistoryController = async (req, res) => {
+  try {
+    const { userId, articleId } = req.body;
+    // Check if the article is already in the reading history
+    const existingEntry = await ReadingHistory.findOne({ userId, articleId });
+
+    if (existingEntry) {
+      return res
+        .status(200)
+        .json({ message: "Article already marked as read." });
+    }
+
+    // Create a new entry in the reading history
+    const readingHistoryEntry = new ReadingHistory({ userId, articleId });
+    await readingHistoryEntry.save();
+
+    return res.status(201).json({
+      message: "Article marked as read and added to reading history.",
+      readingHistoryEntry,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error marking article as read." });
+  }
+};
+
+export const getUserReadingHistoryController = async (req, res) => {
+  try {
+    const userId = req.id;
+
+    const userHistory = await ReadingHistory.find({ userId }).populate({
+      path: "articleId",
+      select: "articleTitle subTitle description articleThumbnail creator",
+      populate: {
+        path: "creator",
+        select: "name photoUrl",
+      },
+    });
+
+    return res.status(201).send({ userHistory });
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(500)
+      .json({ message: "Error Fetching user Reading History." });
   }
 };

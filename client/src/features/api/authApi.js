@@ -4,7 +4,7 @@ import { userLoggedIn, userLoggedOut } from "../authSlice";
 const USER_API = "https://newsify-myh1.onrender.com/api/user";
 export const authApi = createApi({
   reducerPath: "authApi",
-  tagTypes: ["Refetch_Bookmarks"],
+  tagTypes: ["Refetch_Bookmarks", "Refetch_History"],
   baseQuery: fetchBaseQuery({
     baseUrl: USER_API,
     credentials: "include",
@@ -52,7 +52,6 @@ export const authApi = createApi({
         }
       },
     }),
-
     loadUser: builder.query({
       query: () => ({
         url: "profile",
@@ -67,7 +66,6 @@ export const authApi = createApi({
         }
       },
     }),
-
     updateUser: builder.mutation({
       query: (formData) => ({
         url: "profile/update",
@@ -94,7 +92,21 @@ export const authApi = createApi({
     getBookmarks: builder.query({
       query: () => "/bookmarks",
     }),
-    provideTags: ["Refetch_Bookmark"],
+    readingHistory: builder.mutation({
+      query: ({ userId, articleId }) => ({
+        url: "history/read",
+        method: "POST",
+        body: { userId, articleId },
+      }),
+      invalidatesTags: ["Refetch_History"],
+    }),
+    getUserReadingHistory: builder.query({
+      query: () => ({
+        url: "reading-history",
+        method: "GET",
+      }),
+      providesTags: ["Refetch_History"],
+    }),
   }),
 });
 
@@ -108,4 +120,6 @@ export const {
   useAddBookmarkMutation,
   useRemoveBookmarkMutation,
   useGetBookmarksQuery,
+  useReadingHistoryMutation,
+  useGetUserReadingHistoryQuery,
 } = authApi;

@@ -132,7 +132,7 @@ const Profile = () => {
                             <h1 className="font-semibold text-gray-900 dark:text-gray-100 ">
                                 Role:
                                 <span className="font-normal text-gray-700 dark:text-gray-300 ml-2">
-                                    {user.role.toUpperCase()}
+                                    {user.role == "instructor" ? "Admin" : "Reader"}
                                 </span>
                             </h1>
                         </div>

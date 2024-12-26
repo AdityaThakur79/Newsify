@@ -21,7 +21,7 @@ const Courses = () => {
         let filtered = courses;
 
         if (selectedCategory) {
-            filtered = filtered.filter(course => course.category === selectedCategory);
+            filtered = filtered.filter(course => course.category._id === selectedCategory);
         }
 
         if (startDate && endDate) {
@@ -41,6 +41,7 @@ const Courses = () => {
         return filtered;
     };
 
+   
     // Filtered courses
     const filteredCourses = filterCourses(coursesData?.courses || []);
 
@@ -129,7 +130,7 @@ const Courses = () => {
                     ) : currentCourses.length > 0 ? (
                         currentCourses.map((course) => <Course key={course._id} course={course} />)
                     ) : (
-                        <p>No courses available for the selected filters.</p>
+                        <p>No Articles available for the selected filters.</p>
                     )}
                 </div>
 

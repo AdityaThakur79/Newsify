@@ -56,6 +56,12 @@ export const tagApi = createApi({
       }),
       invalidatesTags: ["Refetch_Tag"],
     }),
+    getArticlesByTag: builder.query({
+      query: (tagId) => ({
+        url: `/tag-detail/${tagId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -66,4 +72,5 @@ export const {
   useGetTagByIdQuery,
   useUpdateTagMutation,
   useDeleteTagMutation,
+  useGetArticlesByTagQuery,
 } = tagApi;

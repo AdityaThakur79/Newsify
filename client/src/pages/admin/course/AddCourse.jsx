@@ -20,13 +20,38 @@ import { toast } from 'sonner';
 import RichTextEditor from '@/components/RichTextEditor';
 
 const AddCourse = () => {
-    const [articleTitle, setArticleTitle] = useState('');
-    const [subTitle, setSubTitle] = useState('');
-    const [description, setDescription] = useState('');
-    const [category, setCategory] = useState('');
-    const [tags, setTags] = useState('');
-    const [readingTime, setReadingTime] = useState('');
-    const [publishedAt, setPublishedAt] = useState('');
+    // const [articleTitle, setArticleTitle] = useState('');
+    // const [subTitle, setSubTitle] = useState('');
+    // const [description, setDescription] = useState('');
+    // const [category, setCategory] = useState('');
+    // const [tags, setTags] = useState('');
+    // const [readingTime, setReadingTime] = useState('');
+    // const [publishedAt, setPublishedAt] = useState('');
+
+    const [input, setInput] = useState({
+        articleTitle: "",
+        subTitle: "",
+        description: "",
+        category: "",
+        tags: "",
+        isPublished: false,
+        publishedAt: "",
+        readingTime: "",
+        courseThumbnail: "",
+    });
+
+    const [previewThumbnail, setPreviewThumbnail] = useState("");
+
+    const changeEventHandler = (e) => {
+        const { name, value } = e.target;
+        setInput({ ...input, [name]: value });
+    };
+
+    const handleSelectChange = (name, value) => {
+        setInput((prev) => ({ ...prev, [name]: value }));
+    };
+
+
 
     const navigate = useNavigate();
     const { data: categoriesData, isLoading: categoriesLoading } = useGetAllCategoriesQuery();
@@ -34,23 +59,36 @@ const AddCourse = () => {
     const [createCourse, { data, isLoading, error, isSuccess }] = useCreateCourseMutation();
 
     const createCourseHandler = async () => {
-        await createCourse({
-            articleTitle,
-            subTitle,
-            description,
-            category,
-            tags,
-            publishedAt,
-            readingTime,
-        });
+        const formData = new FormData();
+        formData.append("articleTitle", input.articleTitle);
+        formData.append("subTitle", input.subTitle);
+        formData.append("courseThumbnail", input.courseThumbnail);
+        formData.append("description", input.description);
+        formData.append("category", input.category);
+        formData.append("tags", input.tags);
+        formData.append("isPublished", input.isPublished);
+        formData.append(
+            "publishedAt",
+            input.isPublished ? new Date().toISOString() : input.publishedAt
+        );
+        formData.append("readingTime", input.readingTime);
+
+        // Log formData for debugging
+        console.log("FormData entries:");
+        for (let [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
+
+        await createCourse(formData);
     };
+
 
     useEffect(() => {
         if (isSuccess) {
-            toast.success(data?.message || "Course Created Successfully");
+            toast.success(data?.message || "Article Created Successfully");
             navigate("/admin/course");
         } else if (error) {
-            toast.error(error?.data?.message || "Course creation failed");
+            toast.error(error?.data?.message || "Article creation failed");
         }
     }, [isSuccess, error, data, navigate]);
 
@@ -65,8 +103,9 @@ const AddCourse = () => {
                     <Label>Title</Label>
                     <Input
                         type="text"
-                        value={articleTitle}
-                        onChange={(e) => setArticleTitle(e.target.value)}
+                        name="articleTitle"
+                        value={input.articleTitle}
+                        onChange={changeEventHandler}
                         placeholder="Article Title"
                     />
                 </div>
@@ -74,21 +113,46 @@ const AddCourse = () => {
                     <Label>Subtitle</Label>
                     <Input
                         type="text"
-                        value={subTitle}
-                        onChange={(e) => setSubTitle(e.target.value)}
+                        name="subTitle"
+                        value={input.subTitle}
+                        onChange={changeEventHandler}
                         placeholder="Article Subtitle"
                     />
                 </div>
                 <div>
+                    <Label>Course Thumbnail</Label>
+                    <Input
+                        type="file"
+                        accept="image/*"
+                        className="w-full md:w-auto"
+                        onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                                setInput({ ...input, courseThumbnail: file });
+                                const fileReader = new FileReader();
+                                fileReader.onloadend = () => setPreviewThumbnail(fileReader.result);
+                                fileReader.readAsDataURL(file);
+                            }
+                        }}
+                    />
+                    {previewThumbnail && (
+                        <img
+                            src={previewThumbnail}
+                            className="w-full md:w-64 my-2"
+                            alt="courseThumbnail"
+                        />
+                    )}
+                </div>
+                <div>
                     <Label>Description</Label>
                     <RichTextEditor
-                        value={description}
-                        onChange={setDescription}
+                        value={input.description}
+                        onChange={(value) => setInput((prev) => ({ ...prev, description: value }))}
                     />
                 </div>
                 <div>
                     <Label>Category</Label>
-                    <Select value={category} onValueChange={setCategory}>
+                    <Select value={input.category} onValueChange={(value) => handleSelectChange("category", value)}>
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Select a category" />
                         </SelectTrigger>
@@ -112,8 +176,8 @@ const AddCourse = () => {
                     <Label>Tags</Label>
                     <Select
                         multiple
-                        value={tags}
-                        onValueChange={setTags}
+                        value={input.tags}
+                        onValueChange={(value) => handleSelectChange("tags", value)}
                     >
                         <SelectTrigger className="w-[180px]">
                             <SelectValue placeholder="Select tags" />
@@ -138,8 +202,9 @@ const AddCourse = () => {
                     <Label>Reading Time (in minutes)</Label>
                     <Input
                         type="number"
-                        value={readingTime}
-                        onChange={(e) => setReadingTime(e.target.value)}
+                        name="readingTime"
+                        value={input.readingTime}
+                        onChange={changeEventHandler}
                         placeholder="Estimated Reading Time"
                     />
                 </div>
@@ -147,8 +212,9 @@ const AddCourse = () => {
                     <Label>Published At</Label>
                     <Input
                         type="date"
-                        value={publishedAt}
-                        onChange={(e) => setPublishedAt(e.target.value)}
+                        name="publishedAt"
+                        value={input.publishedAt}
+                        onChange={changeEventHandler}
                     />
                 </div>
                 <div className="flex items-center gap-2">

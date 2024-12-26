@@ -11,25 +11,12 @@ export const courseApi = createApi({
 
   endpoints: (builder) => ({
     createCourse: builder.mutation({
-      query: ({
-        articleTitle,
-        subTitle,
-        description,
-        category,
-        tags,
-        publishedAt,
-        readingTime,
-      }) => ({
+      query: (formData) => ({
         url: "",
         method: "POST",
-        body: {
-          articleTitle,
-          subTitle,
-          description,
-          category,
-          tags,
-          publishedAt,
-          readingTime,
+        body: formData,
+        headers: {
+          Accept: "application/json",
         },
       }),
       invalidatesTags: ["Refetch_Creator_Course"],
@@ -57,6 +44,7 @@ export const courseApi = createApi({
       }),
       invalidatesTags: ["Refetch_Creator_Course"],
     }),
+
     getCourseById: builder.query({
       query: (courseId) => ({
         url: `/${courseId}`,
@@ -64,6 +52,7 @@ export const courseApi = createApi({
       }),
       providesTags: ["Refetch_Creator_Course"],
     }),
+
     publishCourse: builder.mutation({
       query: ({ courseId, query }) => ({
         url: `/${courseId}?publish=${query}`,
@@ -71,6 +60,7 @@ export const courseApi = createApi({
       }),
       invalidatesTags: ["Refetch_Creator_Course"],
     }),
+
     summarizeDescription: builder.mutation({
       query: (courseId) => ({
         url: `${courseId}/summarize`,
@@ -78,6 +68,7 @@ export const courseApi = createApi({
         body: { courseId },
       }),
     }),
+
     deleteCourse: builder.mutation({
       query: (courseId) => ({
         url: `${courseId}`,
@@ -86,6 +77,7 @@ export const courseApi = createApi({
       }),
       invalidatesTags: ["Refetch_Creator_Course"],
     }),
+    
     getArticleByCategory: builder.query({
       query: (courseId) => `related/${courseId}`,
     }),

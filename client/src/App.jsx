@@ -22,6 +22,9 @@ import EditTag from './pages/admin/tag/EditTag'
 import ArticleDetail from './pages/student/ArticleDetail'
 import MyBookmarks from './pages/student/MyBookmarks.jsx'
 import CategoriesTagsCard from './pages/student/Categories'
+import ReadingHistory from './pages/student/ReadingHistory'
+import Category from './pages/student/Category'
+import Tag from './pages/student/Tag'
 
 
 const appRouter = createBrowserRouter([{
@@ -54,6 +57,14 @@ const appRouter = createBrowserRouter([{
       )
     },
     {
+      path: "myreadinghistory",
+      element: (
+        <ProtectedRoute>
+          <ReadingHistory />
+        </ProtectedRoute>
+      )
+    },
+    {
       path: "profile",
       element: (
         <ProtectedRoute>
@@ -68,6 +79,22 @@ const appRouter = createBrowserRouter([{
       element: (
         <ProtectedRoute>
           <ArticleDetail />
+        </ProtectedRoute>
+      )
+    },
+    {
+      path: "category-detail/:categoryId",
+      element: (
+        <ProtectedRoute>
+          <Category />
+        </ProtectedRoute>
+      )
+    },
+    {
+      path: "tag-detail/:tagId",
+      element: (
+        <ProtectedRoute>
+          <Tag />
         </ProtectedRoute>
       )
     },

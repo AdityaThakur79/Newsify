@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { BadgeInfo, Heart, Trash } from "lucide-react";
 import { useNavigate, useParams, Link } from "react-router-dom";
 import { useGetArticleByCategoryQuery, useGetCourseByIdQuery, useSummarizeDescriptionMutation } from "@/features/api/courseApi";
-import { useAddBookmarkMutation, useRemoveBookmarkMutation } from "@/features/api/authApi";
+import { useAddBookmarkMutation, useReadingHistoryMutation, useRemoveBookmarkMutation } from "@/features/api/authApi";
 import { useCreateCommentMutation, useGetCommentsByCourseQuery, useDeleteCommentMutation } from "@/features/api/commentApi.js";
 import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@radix-ui/react-avatar";
@@ -21,6 +21,7 @@ const ArticleDetail = () => {
     const [addBookmark, { isLoading: addLoading }] = useAddBookmarkMutation();
     const [removeBookmark, { isLoading: removeLoading }] = useRemoveBookmarkMutation();
     const [createComment, { isLoading: createCommentLoading }] = useCreateCommentMutation();
+
     const { data: commentsData, isLoading: commentsLoading, isError: commentsError } = useGetCommentsByCourseQuery(courseId);
     const [deleteComment] = useDeleteCommentMutation();
 
@@ -28,10 +29,20 @@ const ArticleDetail = () => {
     const [isBookmarked, setIsBookmarked] = useState(false);
     const [comment, setComment] = useState("");
     const { user } = useSelector(store => store.auth);
-
+    const userId = user._id;
     // Fetch related articles and handle comments
     const [relatedArticles, setRelatedArticles] = useState([]);
     const [comments, setComments] = useState([]);
+
+
+    const [readingHistory, { }] = useReadingHistoryMutation();
+    useEffect(() => {
+        if (courseId) {
+            readingHistory({ userId, articleId: courseId })
+        }
+    }, [courseId]);
+
+
 
     useEffect(() => {
         if (data?.article?.isBookmarked) {

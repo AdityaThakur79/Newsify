@@ -17,15 +17,19 @@ export const createCourseController = async (req, res) => {
       readingTime,
     } = req.body;
 
+    const articleThumbnail = req.file;
+
     if (!articleTitle || !category || !tags) {
       return res
         .status(400)
         .json({ success: false, message: "All fields are required" });
     }
+    let updatedArticleThumbnail = await uploadMedia(articleThumbnail.path);
 
     const course = await Course.create({
       articleTitle,
       subTitle,
+      articleThumbnail: updatedArticleThumbnail?.secure_url || "",
       description,
       category,
       tags,
@@ -36,12 +40,12 @@ export const createCourseController = async (req, res) => {
 
     res
       .status(201)
-      .json({ success: true, message: "Course Created Successfully", course });
+      .json({ success: true, message: "Article Created Successfully", course });
   } catch (error) {
     console.error(error);
     res.status(500).json({
       success: false,
-      message: "Course Not Created",
+      message: "Article Not Created",
       error: error.message,
     });
   }
@@ -56,6 +60,9 @@ export const getAllPublishedCourses = async (req, res) => {
       })
       .populate({
         path: "tags",
+      })
+      .populate({
+        path: "category",
       })
       .sort({ createdAt: -1 });
     if (!courses) {
@@ -77,15 +84,10 @@ export const getAllPublishedCourses = async (req, res) => {
 export const updateCourseController = async (req, res) => {
   try {
     const courseId = req.params.courseId;
-    const {
-      articleTitle,
-      subTitle,
-      isPublished,
-      publishedAt,
-      readingTime,
-    } = req.body;
+    const { articleTitle, subTitle, isPublished, publishedAt, readingTime } =
+      req.body;
 
-    const articleThumbnail = req.file; // Getting the uploaded thumbnail file from req.file
+    const articleThumbnail = req.file;
 
     // Validate required fields
     if (!articleTitle) {
@@ -123,7 +125,7 @@ export const updateCourseController = async (req, res) => {
         updatedArticleThumbnail?.secure_url || course.articleThumbnail,
       isPublished: isPublished !== undefined ? isPublished : course.isPublished,
       publishedAt:
-        isPublished && !course.publishedAt ? new Date() : publishedAt, // Auto set publishedAt if it's newly published
+        isPublished && !course.publishedAt ? new Date() : publishedAt,
       readingTime,
     };
 
@@ -134,12 +136,12 @@ export const updateCourseController = async (req, res) => {
 
     return res
       .status(200)
-      .send({ success: true, message: "Course Updated Successfully", course });
+      .send({ success: true, message: "Article Updated Successfully", course });
   } catch (error) {
     console.log(error);
     return res.status(500).send({
       success: false,
-      message: "Something Went wrong while updating the course",
+      message: "Something Went wrong while updating the Article",
       error,
     });
   }

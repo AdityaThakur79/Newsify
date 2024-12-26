@@ -17,11 +17,10 @@ const RichTextEditor = ({ value, onChange }) => {
         input.onchange = async () => {
             const file = input.files[0];
             if (file) {
-                // Upload the image to your server or cloud service (e.g., Cloudinary)
-                // You can use FormData to send the file and get the image URL
+
                 const formData = new FormData();
                 formData.append("file", file);
-                // Replace with your image upload API
+
                 try {
                     const response = await fetch("/api/upload", {
                         method: "POST",
@@ -29,12 +28,12 @@ const RichTextEditor = ({ value, onChange }) => {
                     });
 
                     const data = await response.json();
-                    const imageUrl = data?.url; // Assuming the response contains the image URL
+                    const imageUrl = data?.url;
                     if (imageUrl) {
                         const quill = window.quill;
                         const range = quill.getSelection();
-                        quill.insertEmbed(range.index, "image", imageUrl); // Insert image at the cursor position
-                        onChange(quill.root.innerHTML); // Update parent component with the HTML content
+                        quill.insertEmbed(range.index, "image", imageUrl);
+                        onChange(quill.root.innerHTML);
                     } else {
                         toast.error("Image upload failed");
                     }
@@ -66,7 +65,7 @@ const RichTextEditor = ({ value, onChange }) => {
                 value={editorValue}
                 onChange={(content) => {
                     setEditorValue(content);
-                    onChange(content); // Update the parent with editor content
+                    onChange(content);  
                 }}
                 modules={modules}
                 formats={[
@@ -87,7 +86,7 @@ const RichTextEditor = ({ value, onChange }) => {
                     "indent",
                 ]}
             />
-            <Button onClick={imageHandler} variant="outline">Insert Image</Button>
+            {/* <Button onClick={imageHandler} variant="outline">Insert Image</Button> */}
         </div>
     );
 };

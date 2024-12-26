@@ -1,4 +1,5 @@
-import {Category} from "../models/category.js";
+import { Category } from "../models/category.js";
+import { Course } from "../models/course.js";
 
 //CRUD Category
 
@@ -121,3 +122,23 @@ export const deleteCategoryController = async (req, res) => {
   }
 };
 
+export const getArticlesByCategory = async (req, res) => {
+  try {
+    const { categoryId } = req.params;
+
+    const articles = await Course.find({ category: categoryId })
+      .populate("creator", "name photoUrl")
+      .populate("tags", "name");
+
+    if (articles.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No articles found for this category" });
+    }
+ 
+    res.status(200).json({ articles });
+  } catch (error) {
+    console.error("Error fetching articles by category:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+};

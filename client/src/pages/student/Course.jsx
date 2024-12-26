@@ -20,6 +20,9 @@ const Course = ({ course }) => {
                                         {tag.name}
                                     </Badge>
                                 ))}
+                                <Badge className={'bg-blue-600 text-white px-2 py-1 text-xs rounded-full relative'}>
+                                    {course.category.name}
+                                </Badge>
                             </div>
                         ) : (
                             <p>No tags available</p>

@@ -7,7 +7,7 @@ export const categoryApi = createApi({
   tagTypes: ["Refetch_Category"],
   baseQuery: fetchBaseQuery({
     baseUrl: CATEGORY_API,
-    credentials: "include", 
+    credentials: "include",
   }),
   endpoints: (builder) => ({
     // Create a new category
@@ -56,14 +56,20 @@ export const categoryApi = createApi({
       }),
       invalidatesTags: ["Refetch_Category"],
     }),
+    articlesByCategory: builder.query({
+      query: (categoryId) => ({
+        url: `/category-detail/${categoryId}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-// Export hooks for usage in functional components
 export const {
   useCreateCategoryMutation,
   useGetAllCategoriesQuery,
   useGetCategoryByIdQuery,
   useUpdateCategoryMutation,
   useDeleteCategoryMutation,
+  useArticlesByCategoryQuery,
 } = categoryApi;

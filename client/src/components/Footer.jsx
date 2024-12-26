@@ -4,7 +4,7 @@ import { Button } from '../components/ui/button';
 
 const Footer = () => {
     return (
-        <footer className="bg-gray-900 text-white py-10">
+        <footer className="bg-gray-900 text-white py-10 mt-20">
             <div className="max-w-7xl mx-auto px-6">
                 {/* Footer Content */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
