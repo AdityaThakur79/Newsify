@@ -1,77 +1,47 @@
-# **LMS**
+# Newsify - Full-Stack News Website [https://newsify-myh1.onrender.com/]
 
-This project is a comprehensive **Learning Management System (LMS)** designed to streamline online education for both administrators and users. Built using modern web development technologies, the LMS provides an intuitive interface and robust features to support course creation, management, and learning experiences.
+Newsify is a full-stack news website application that allows users to read, manage, and interact with articles. The platform includes features for both regular users and administrators, providing functionalities like article management, user registration, and more. The app supports rich text content creation, role-based access, and article categorization.
 
----
+## Project Overview
 
-## **Key Features**
+Newsify demonstrates proficiency in full-stack web development and provides a platform for both reading and managing news articles. The website features a news article management system for administrators and various user functionalities such as article bookmarking, reading history tracking, and commenting.
 
-### 1. **Authentication & Authorization**
-- User login/signup functionality with secure authentication.  
-- Role-based access control for administrators, instructors, and learners.  
+## Core Features
 
-### 2. **Course Management**
-- Admin dashboard for creating, editing, and managing courses.  
-- Features for uploading lectures, managing course details, and setting publication status.  
-- Integration with **Multer** and **Cloudinary** for media uploads.  
+### Authentication & Authorization
+- User registration and login system
+- Role-based access control (Admin vs Regular User)
+- Password encryption
+- Authentication using token / session
+- Forgot password functionality
 
-### 3. **User Profiles**
-- Personalized user profiles with update and edit options.  
-- Tracking of purchased courses and learning progress.  
+### Admin Panel
+- **Article Management**: Create, Edit, Delete news articles
+- **Category Management**: Manage article categories
+- **Tag Management**: Create and manage tags
+- **Article Draft & Publish Functionality**
+- **WYSIWYG Editor**: Rich text editor for article content creation
+- **Admin-Only Article Visibility**: Admins can only see articles they created
+- **Featured Image**: Admin can upload featured images for articles
+- **Admin Profile Page**: Shows Admin photo, banner, name, about section, and articles published
+- **Comment Moderation**: Ability to moderate comments on articles
 
-### 4. **Frontend Design**
-- Clean and responsive UI built with **Shadcn UI**.  
-- Pages for the navbar, hero section, and dynamic course-related content.  
-- Support for **light/dark mode** for enhanced user experience.  
+### News Articles
+- **Rich Text Editor**: For article creation with support for images and multimedia
+- **Pagination**: For article listing with pagination support
+- **Search Functionality**: By title, category, and tags
+- **Related Articles**: Recommendation of related articles based on the article's category
 
-### 5. **Backend Setup**
-- Backend API using **Node.js** and **Express** with RESTful controllers.  
-- Database integration with **MongoDB** for user and course data management.  
-- Integration with **Redux Toolkit Query (RTK Query)** for efficient state management.  
+### User Features
+- **Article Listing**: List of articles with search and date filter
+- **Bookmark/Favorite Articles**: Users can bookmark or mark articles as favorites
+- **User Profile Management**: Users can manage their profiles
+- **Reading History Tracking**: Track the history of articles read by users
+- **Commenting System**: Users can comment on articles
 
-### 6. **Course Operations**
-- Adding and editing course details, including lecture uploads and updates.  
-- Fetching and displaying courses based on admin/user roles.  
-
-### 7. **Payment & Purchases**
-- Seamless course purchase flow using **Stripe** for payment processing.  
-- Webhook implementation for managing purchase transactions.  
-
-### 8. **Interactive Learning**
-- User-friendly interface for accessing purchased courses and tracking learning progress.  
-- Support for filtering and searching courses.  
-
-### 9. **Advanced Features**
-- Protected routes ensuring secure access to critical pages.  
-- Dynamic routing using **React Router Dom**.  
-- Support for publishing/unpublishing courses with status updates.  
-
----
-
-## **Tech Stack**
-
-### **Frontend:**
-- React.js  
-- Redux Toolkit  
-- Shadcn UI  
-- React Router Dom  
-
-### **Backend:**
-- Node.js  
-- Express.js  
-
-### **Database:**
-- MongoDB  
-
-### **State Management:**
-- Redux Toolkit (RTK Query)  
-
-### **File Storage:**
-- Multer  
-- Cloudinary  
-
-### **Payment Gateway:**
-- Stripe  
-
-### **Version Control:**
-- Git  
+## Technologies Used
+- **Frontend**: React.js, Shadcn UI
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB (for storing articles, user data, comments, etc.)
+- **Authentication**: JWT (JSON Web Tokens) for user authentication
+- **Admin Panel**: Custom-built admin panel for article and user management
