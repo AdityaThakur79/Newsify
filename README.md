@@ -1,4 +1,4 @@
-# Newsify - Full-Stack News Website [https://newsify-myh1.onrender.com/]
+# Newsify - Full-Stack News Website [Live Preview](https://newsify-myh1.onrender.com/)
 
 Newsify is a full-stack news website application that allows users to read, manage, and interact with articles. The platform includes features for both regular users and administrators, providing functionalities like article management, user registration, and more. The app supports rich text content creation, role-based access, and article categorization.
 
@@ -45,3 +45,9 @@ Newsify demonstrates proficiency in full-stack web development and provides a pl
 - **Database**: MongoDB (for storing articles, user data, comments, etc.)
 - **Authentication**: JWT (JSON Web Tokens) for user authentication
 - **Admin Panel**: Custom-built admin panel for article and user management
+
+## Live Preview
+
+Check out the live version of the website here: [Newsify Live](https://newsify-myh1.onrender.com/).
+
+ 
