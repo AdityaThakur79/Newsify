@@ -7,6 +7,15 @@ import { appStore } from './app/store'
 import { Toaster } from './components/ui/sonner'
 import { useLoadUserQuery } from './features/api/authApi'
 import HomePageSkeleton from './components/HomePageSkeleton'
+import { registerSW } from 'virtual:pwa-register';
+
+registerSW({
+  onNeedRefresh() {
+    if (confirm("New update available. Reload?")) {
+      window.location.reload();
+    }
+  },
+});
 
 const Custom = ({ children }) => {
   const { isLoading } = useLoadUserQuery();
